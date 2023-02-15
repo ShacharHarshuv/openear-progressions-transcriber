@@ -1,4 +1,4 @@
-import { Stack, Button, MenuItem, Autocomplete } from "@mui/material";
+import { Stack, Button } from "@mui/material";
 import React from "react";
 import { Formik, Form } from "formik";
 import {
@@ -8,8 +8,8 @@ import {
 import { FormikConfig } from "formik/dist/types";
 import { TextField } from "./form/TextField";
 import { modes } from "./Mode";
-import { Select } from "./form/Select";
 import { ComboBox } from "./form/ComboBox";
+import { noteTypes } from "./NoteType";
 
 export function ProgressionDescriptorForm() {
   const handleSubmit: FormikConfig<ProgressionDescriptor>["onSubmit"] = (
@@ -33,7 +33,7 @@ export function ProgressionDescriptorForm() {
               {/*TODO: could be auto-complete?*/}
             </Stack>
             <Stack spacing={2} direction="row">
-              <TextField label="Tonic" name="key" />
+              <ComboBox label="Tonic" name="key" options={noteTypes} />
               {/*TODO: should be combo box*/}
               <ComboBox name="mode" options={modes} label="Mode" />
               {/*TODO: should be combo box*/}
