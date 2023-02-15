@@ -1,25 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Container, Paper, Typography, TextField, Stack } from "@mui/material";
+import { ProgressionDescriptorForm } from "./ProgressionDescriptorForm";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container className="pt-10">
+      <Paper className="p-5">
+        <Typography variant="h4" className="pb-4">
+          Chord Progression Transcriber for Open-Ear
+        </Typography>
+        <ProgressionDescriptorForm />
+      </Paper>
+    </Container>
   );
 }
 
