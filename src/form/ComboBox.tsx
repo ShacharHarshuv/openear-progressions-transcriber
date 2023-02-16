@@ -1,4 +1,9 @@
-import { Autocomplete, TextField, AutocompleteValue } from "@mui/material";
+import {
+  Autocomplete,
+  TextField,
+  AutocompleteValue,
+  AutocompleteProps,
+} from "@mui/material";
 import { useField } from "./useField";
 import { FieldHookConfig } from "formik/dist/Field";
 import React, { SyntheticEvent } from "react";
@@ -18,11 +23,11 @@ function isComboBoxOptions<V>(
 // todo: see how we can reuse logic from MUIFormControlWrapper
 export function ComboBox<V>(
   props: Pick<
-    UseAutocompleteProps<ComboBoxOption<V> | string, false, false, false>,
-    "options"
+    AutocompleteProps<ComboBoxOption<V> | string, false, false, false>,
+    "options" | "sx"
   > &
     FieldHookConfig<V> & {
-      label: string;
+      label?: string;
     }
 ) {
   const { field, hasError, helperText, helper } = useField(props);
@@ -50,7 +55,7 @@ export function ComboBox<V>(
       }}
       value={selectedValue}
       options={options}
-      sx={{ width: 195 }} // todo: should be identical to the width of the text field, without writing explicitly
+      sx={props.sx ?? { width: 195 }} // todo: should be identical to the width of the text field, without writing explicitly
       renderInput={(params) => (
         <TextField
           {...params}

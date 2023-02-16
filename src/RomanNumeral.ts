@@ -1,0 +1,25 @@
+export const romanNumeralChordSymbolList = [
+  "I",
+  "V",
+  "IV",
+  "vi",
+  "ii",
+  "iii",
+  "bVII",
+  "III",
+  "II",
+  "bVI",
+  "bIII",
+  "iv",
+  "v",
+  "iidim",
+  "VI",
+  "VII",
+  "#ivdim",
+  "i",
+  "bII",
+  "vdim",
+  "bvii",
+];
+
+export type RomanNumeral = (typeof romanNumeralChordSymbolList)[number];

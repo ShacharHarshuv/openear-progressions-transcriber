@@ -9,7 +9,7 @@ export type FormikFieldWrapperInnerComponentProps<V, P> = P & {
   error?: string;
 } & FieldHookConfig<V>;
 
-// todo: remove if not neede
+// todo: remove if not needed
 export function FormikFieldWrapper<V, P>(
   Component:
     | FunctionComponent<FormikFieldWrapperInnerComponentProps<V, P>>
