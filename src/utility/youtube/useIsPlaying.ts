@@ -1,9 +1,8 @@
 import { YouTubePlayer } from "youtube-player/dist/types";
-import { useEffect, useCallback } from "react";
-import { useDistinctState } from "../useDistinctState";
+import { useEffect, useCallback, useState } from "react";
 
 export function useIsPlaying(youtube: YouTubePlayer | null) {
-  const [isPlaying, setIsPlaying] = useDistinctState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const listener = useCallback((event: CustomEvent) => {
     setIsPlaying((event as CustomEvent & { data: number }).data === 1);
