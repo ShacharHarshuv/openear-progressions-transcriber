@@ -1,7 +1,6 @@
-import { FieldHookConfig } from "formik/dist/Field";
 import React, { ComponentType } from "react";
 import { FormControl, InputLabel, FormHelperText } from "@mui/material";
-import { useField } from "./useField";
+import { useField, FieldHookConfig } from "./useField";
 
 type InnerComponentProps<V, P> = P & {
   id: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Paper, Typography, TextField, Stack } from "@mui/material";
+import { Container, Paper, Typography } from "@mui/material";
 import { ProgressionDescriptorForm } from "./ProgressionDescriptorForm";
 
 function App() {
