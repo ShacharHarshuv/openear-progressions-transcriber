@@ -1,4 +1,4 @@
-import { Stack, IconButton, Typography } from "@mui/material";
+import { Stack, IconButton, Typography, Tooltip } from "@mui/material";
 import { FieldArray, useFormikContext } from "formik";
 import { ComboBox } from "../form/ComboBox";
 import { romanNumeralChordSymbolList } from "../RomanNumeral";
@@ -14,6 +14,8 @@ import { useIsPlaying } from "../utility/youtube/useIsPlaying";
 import { YouTubePlayer } from "youtube-player/dist/types";
 import { round, update } from "lodash";
 import { handleOnKeyPress } from "../utility/keyboard-events/handleKeyPress";
+import { faPlay } from "@fortawesome/free-solid-svg-icons/faPlay";
+import { faPause } from "@fortawesome/free-solid-svg-icons/faPause";
 
 export function ChordsForm({ player }: { player: YouTubePlayer | null }) {
   const { values, setValues } = useFormikContext<ProgressionDescriptor>();
@@ -48,77 +50,101 @@ export function ChordsForm({ player }: { player: YouTubePlayer | null }) {
 
   return (
     <Stack spacing={1} alignItems="center" justifyContent="center">
-      <FieldArray name="chords">
-        {({ push, remove }) => (
-          <>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${chords.length + 1}, 1fr)`,
-                gap: "1rem",
-                justifyItems: "center",
-                alignItems: "end",
-                padding: "1rem",
-              }}
-            >
-              <CurrentChordIndication {...{ currentChordIndex }} />
-              {renderRow(
-                (name) => (
-                  <ComboBox
-                    sx={{ width: 70 }}
-                    name={`${name}.chord`}
-                    options={romanNumeralChordSymbolList}
-                  />
-                ),
-                <IconButton onClick={() => push({})}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </IconButton>
-              )}
-              {renderRow(
-                (name, index) => (
+      <Stack
+        spacing={1}
+        alignItems="center"
+        justifyContent="center"
+        direction="row"
+      >
+        <Tooltip title="Play progression from the beginning">
+          <IconButton
+            onClick={useCallback(() => {
+              if (!player) {
+                return;
+              }
+              if (isPlaying) {
+                player.pauseVideo();
+              } else {
+                player.seekTo(values.chords[0].seconds, true);
+                player.playVideo();
+              }
+            }, [player, isPlaying, values.chords[0].seconds])}
+          >
+            <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+          </IconButton>
+        </Tooltip>
+        <FieldArray name="chords">
+          {({ push, remove }) => (
+            <>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${chords.length + 1}, 1fr)`,
+                  gap: "1rem",
+                  justifyItems: "center",
+                  alignItems: "end",
+                  padding: "1rem",
+                }}
+              >
+                <CurrentChordIndication {...{ currentChordIndex }} />
+                {renderRow(
+                  (name) => (
+                    <ComboBox
+                      sx={{ width: 70 }}
+                      name={`${name}.chord`}
+                      options={romanNumeralChordSymbolList}
+                    />
+                  ),
+                  <IconButton onClick={() => push({})}>
+                    <FontAwesomeIcon icon={faPlus} />
+                  </IconButton>
+                )}
+                {renderRow(
+                  (name, index) => (
+                    <TextField
+                      sx={{ width: 70 }}
+                      name={`${name}.seconds`}
+                      inputProps={{
+                        type: "number",
+                      }}
+                      onKeyPress={handleOnKeyPress(" ", async (event) => {
+                        setCurrentTime(event);
+
+                        // Move to next field
+                        setTimeout(() => {
+                          const nextField = document.getElementById(
+                            `chords.${index + 1}.seconds`
+                          );
+
+                          if (nextField) {
+                            nextField.focus();
+                          } else {
+                            document.getElementById("endSeconds")?.focus();
+                          }
+                        });
+                      })}
+                    />
+                  ),
                   <TextField
                     sx={{ width: 70 }}
-                    name={`${name}.seconds`}
-                    inputProps={{
-                      type: "number",
-                    }}
+                    name="endSeconds"
+                    label="End"
                     onKeyPress={handleOnKeyPress(" ", async (event) => {
+                      event.preventDefault();
                       setCurrentTime(event);
-
-                      // Move to next field
-                      setTimeout(() => {
-                        const nextField = document.getElementById(
-                          `chords.${index + 1}.seconds`
-                        );
-
-                        if (nextField) {
-                          nextField.focus();
-                        } else {
-                          document.getElementById("endSeconds")?.focus();
-                        }
-                      });
                     })}
                   />
-                ),
-                <TextField
-                  sx={{ width: 70 }}
-                  name="endSeconds"
-                  label="End"
-                  onKeyPress={handleOnKeyPress(" ", async (event) => {
-                    event.preventDefault();
-                    setCurrentTime(event);
-                  })}
-                />
-              )}
-              {renderRow((_, index) => (
-                <IconButton size="small" onClick={() => remove(index)}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </IconButton>
-              ))}
-            </div>
-          </>
-        )}
-      </FieldArray>
+                )}
+                {renderRow((_, index) => (
+                  <IconButton size="small" onClick={() => remove(index)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </IconButton>
+                ))}
+              </div>
+            </>
+          )}
+        </FieldArray>
+      </Stack>
       <Typography variant="body1">
         Press "Space" when on a timestamp to set the time to the current time.
       </Typography>
