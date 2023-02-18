@@ -1,40 +1,19 @@
-import { Stack, Button, IconButton, Grow, Tooltip } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
-import { Form, FieldArray, useFormik, FormikProvider } from "formik";
-import {
-  emptyProgressionDescriptor,
-  ProgressionDescriptor,
-} from "../PorgressionDescriptor";
-import { FormikConfig } from "formik/dist/types";
+import { Stack, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Form, useFormik, FormikProvider } from "formik";
+import { emptyProgressionDescriptor } from "../PorgressionDescriptor";
 import { TextField } from "../form/TextField";
 import { modes } from "../Mode";
 import { ComboBox } from "../form/ComboBox";
 import { noteTypes } from "../NoteType";
-import { JsonViewer } from "../components/JsonViewer";
+import { JsonViewer, getPrettyJson } from "../components/JsonViewer";
 import * as Yup from "yup";
-import { romanNumeralChordSymbolList } from "../RomanNumeral";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
-import { Converter } from "../form/useField";
 import YouTube from "react-youtube";
 import type { YouTubePlayer } from "youtube-player/dist/types";
-import { useIsPlaying } from "../utility/youtube/useIsPlaying";
-import { useDerived } from "../utility/hooks/useDerived";
-import { findPlayingSegmentIndex } from "../utility/findPlayingSegmentIndex";
-import classNames from "classnames";
 import { ChordsForm } from "./ChordsForm";
 import { YoutubeUrlField } from "./YoutubeUrlField";
 
 export function ProgressionDescriptorForm() {
-  const handleSubmit: FormikConfig<ProgressionDescriptor>["onSubmit"] = (
-    values,
-    formikHelpers
-  ) => {
-    console.log("handle submit");
-    alert(JSON.stringify(values, null, 2));
-  };
-
   /**
    * TODO: find a more type safe of doing this
    * Perhaps we can unit initial values and schema together, so it's easier to add validations without losing the schema
@@ -45,7 +24,11 @@ export function ProgressionDescriptorForm() {
 
   const formik = useFormik({
     initialValues: emptyProgressionDescriptor,
-    onSubmit: handleSubmit,
+    onSubmit: (values) => {
+      navigator.clipboard.writeText(getPrettyJson(values)).then(() => {
+        alert("Copied to clipboard");
+      });
+    },
     validationSchema: schema,
   });
 
@@ -88,7 +71,7 @@ export function ProgressionDescriptorForm() {
                 Clear
               </Button>
               <Button type="submit" variant="contained">
-                Download
+                Copy
               </Button>
             </Stack>
           </Stack>
