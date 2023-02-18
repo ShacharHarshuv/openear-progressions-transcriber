@@ -24,21 +24,21 @@ export const emptyProgressionDescriptor: ProgressionDescriptor = {
   videoId: "Bg59q4puhmg",
   chords: [
     {
-      seconds: 36,
+      seconds: 36.56,
       chord: "I",
     },
     {
-      seconds: 39,
+      seconds: 39.45,
       chord: "V",
     },
     {
-      seconds: 42,
+      seconds: 42.41,
       chord: "vi",
     },
     {
-      seconds: 45,
+      seconds: 45.35,
       chord: "IV",
     },
   ],
-  endSeconds: 48,
+  endSeconds: 48.25,
 };

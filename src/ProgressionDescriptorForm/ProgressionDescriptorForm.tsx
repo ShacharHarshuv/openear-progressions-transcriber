@@ -56,6 +56,8 @@ export function ProgressionDescriptorForm() {
   return (
     <FormikProvider value={formik}>
       <Form>
+        Input
+        <input type={"text"} />
         <Stack spacing={8} direction="row">
           <Stack spacing={2}>
             <Stack spacing={2} direction="row">
@@ -71,10 +73,7 @@ export function ProgressionDescriptorForm() {
               <ComboBox name="mode" options={modes} label="Mode" />
               {/*TODO: should be combo box*/}
             </Stack>
-            <YoutubeUrlField
-              label="URL"
-              name="videoId"
-            />
+            <YoutubeUrlField label="URL" name="videoId" />
             <YouTube
               videoId={values.videoId}
               onReady={(event) => {
