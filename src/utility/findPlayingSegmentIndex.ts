@@ -1,4 +1,4 @@
-import { findLastIndex } from "lodash";
+import { findLastIndex, isNil } from "lodash";
 
 export function findPlayingSegmentIndex(
   currentTime: number,
@@ -7,9 +7,9 @@ export function findPlayingSegmentIndex(
 ): number | null {
   // after last segment
   if (
-    (endTime && currentTime >= endTime) ||
+    (!isNil(endTime) && currentTime >= endTime) ||
     !segments.length ||
-    (segments[0].seconds && segments[0].seconds > currentTime)
+    (!isNil(segments[0].seconds) && segments[0].seconds > currentTime)
   ) {
     return null;
   }

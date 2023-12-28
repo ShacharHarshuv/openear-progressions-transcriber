@@ -36,6 +36,16 @@ export function ProgressionDescriptorForm() {
 
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 
+  async function paste() {
+    const text = await navigator.clipboard.readText();
+    try {
+      const parsed = JSON.parse(text);
+      formik.setValues(parsed);
+    } catch (e) {
+      alert("Invalid JSON");
+    }
+  }
+
   return (
     <FormikProvider value={formik}>
       <Form>
@@ -69,6 +79,9 @@ export function ProgressionDescriptorForm() {
               {/*TODO: consider adding a confirm action*/}
               <Button variant="outlined" onClick={() => resetForm()}>
                 Clear
+              </Button>
+              <Button variant="outlined" onClick={() => paste()}>
+                Paste
               </Button>
               <Button type="submit" variant="contained">
                 Copy

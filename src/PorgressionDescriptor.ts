@@ -20,25 +20,25 @@ export const emptyProgressionDescriptor: ProgressionDescriptor = {
   name: "Girlfriend",
   artist: "Avril Lavigne",
   key: "D",
-  mode: Mode.Major,
+  mode: 1,
   videoId: "Bg59q4puhmg",
   chords: [
     {
-      seconds: 36.56,
+      seconds: 36.39,
       chord: "I",
     },
     {
-      seconds: 39.45,
+      seconds: 39.34,
       chord: "V",
     },
     {
-      seconds: 42.41,
+      seconds: 42.23,
       chord: "vi",
     },
     {
-      seconds: 45.35,
+      seconds: 45.14,
       chord: "IV",
     },
   ],
-  endSeconds: 48.25,
+  endSeconds: 48.1,
 };
