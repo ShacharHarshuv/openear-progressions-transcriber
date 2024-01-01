@@ -63,6 +63,13 @@ export function ComboBox<V>(
           label={props.label}
           error={hasError}
           helperText={helperText}
+          onChange={(event) => {
+            // TODO: this is technically causes an exception so we should look for the correct way of doing it, but is probably good enough for now
+            const newValue = event.target.value;
+            if (options.find((option) => option.label === newValue)) {
+              helper.setValue(newValue as V);
+            }
+          }}
         />
       )}
     />
