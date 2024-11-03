@@ -6,8 +6,7 @@ import {
 } from "@mui/material";
 import { useField } from "./useField";
 import { FieldHookConfig } from "formik/dist/Field";
-import React, { SyntheticEvent } from "react";
-import { UseAutocompleteProps } from "@mui/base/AutocompleteUnstyled/useAutocomplete";
+import React, { SyntheticEvent, useState } from "react";
 
 type ComboBoxOption<V> = {
   value: V;
@@ -63,6 +62,15 @@ export function ComboBox<V>(
           label={props.label}
           error={hasError}
           helperText={helperText}
+          onBlur={(event) => {
+            const inputValue = event.target.value;
+            const matchedValue = options.find(
+              (option) => option.label === inputValue
+            );
+            if (matchedValue) {
+              helper.setValue(matchedValue.value);
+            }
+          }}
           onChange={(event) => {
             // TODO: this is technically causes an exception so we should look for the correct way of doing it, but is probably good enough for now
             const newValue = event.target.value;
