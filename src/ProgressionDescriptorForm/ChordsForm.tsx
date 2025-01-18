@@ -99,7 +99,7 @@ export function ChordsForm({ player }: { player: YouTubePlayer | null }) {
           </IconButton>
         </Tooltip>
         <FieldArray name="chords">
-          {({ push, remove }) => (
+          {({ push, remove, insert }) => (
             <>
               <div
                 style={{
@@ -175,9 +175,17 @@ export function ChordsForm({ player }: { player: YouTubePlayer | null }) {
                   </Tooltip>
                 )}
                 {renderRow((_, index) => (
-                  <IconButton size="small" onClick={() => remove(index)}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </IconButton>
+                  <div>
+                    <IconButton size="small" onClick={() => remove(index)}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => insert(index + 1, {})}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </IconButton>
+                  </div>
                 ))}
               </div>
             </>
