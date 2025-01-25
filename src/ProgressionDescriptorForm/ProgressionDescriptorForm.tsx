@@ -12,6 +12,7 @@ import YouTube from "react-youtube";
 import type { YouTubePlayer } from "youtube-player/dist/types";
 import { ChordsForm } from "./ChordsForm";
 import { YoutubeUrlField } from "./YoutubeUrlField";
+import JSON5 from "json5";
 
 export function ProgressionDescriptorForm() {
   /**
@@ -39,7 +40,7 @@ export function ProgressionDescriptorForm() {
   async function paste() {
     const text = await navigator.clipboard.readText();
     try {
-      const parsed = JSON.parse(text);
+      const parsed = JSON5.parse(text);
       formik.setValues(parsed);
     } catch (e) {
       alert("Invalid JSON");
