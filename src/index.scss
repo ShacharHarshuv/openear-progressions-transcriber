@@ -9,10 +9,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #E7EBF0;
+  background-color: #e7ebf0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.MuiAutocomplete-clearIndicator {
+  display: none !important;
+}
+
+.MuiAutocomplete-inputRoot {
+  padding-right: 0 !important;
+}
+
+.MuiAutocomplete-endAdornment {
+  display: none !important;
 }
